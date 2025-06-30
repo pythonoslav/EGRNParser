@@ -125,23 +125,49 @@ def search_organizations(
     # Search for organizations
     organizations = service.search_multiple(organization_names, region)
     
-    # Convert to simplified format
+    # Convert to cache format without cached_at
     results = []
     for name, org in zip(organization_names, organizations):
         if org:
-            # Convert to simplified model and then to dict
-            simple_org = SimpleOrganization.from_organization(org)
-            results.append(simple_org.dict())
+            # Convert to cache format structure
+            result = {
+                "query": name,
+                "organization": {
+                    "name": org.name,
+                    "inn": org.inn,
+                    "ogrn": org.ogrn,
+                    "kpp": org.kpp if hasattr(org, 'kpp') else None,
+                    "okved": org.okved,
+                    "okved_additional": org.okved_additional if hasattr(org, 'okved_additional') else [],
+                    "address": org.address,
+                    "phone": org.phone if hasattr(org, 'phone') else None,
+                    "email": org.email if hasattr(org, 'email') else None,
+                    "director": org.director,
+                    "registration_date": org.registration_date.isoformat() if org.registration_date else None,
+                    "status": org.status,
+                    "region": org.region
+                }
+            }
+            results.append(result)
         else:
-            # Return empty result with just the name
+            # Return empty result in cache format
             results.append({
-                'name': name,
-                'inn': None,
-                'ogrn': None,
-                'okved': None,
-                'status': None,
-                'reg_date': None,
-                'phone_number': None
+                "query": name,
+                "organization": {
+                    "name": None,
+                    "inn": None,
+                    "ogrn": None,
+                    "kpp": None,
+                    "okved": None,
+                    "okved_additional": [],
+                    "address": None,
+                    "phone": None,
+                    "email": None,
+                    "director": None,
+                    "registration_date": None,
+                    "status": None,
+                    "region": None
+                }
             })
     
     return results

@@ -8,10 +8,21 @@ results = search_organizations(
 
 # Display results
 for result in results:
-    print(f"\nOrganization: {result['name']}")
-    print(f"  INN: {result['inn']}")
-    print(f"  OGRN: {result['ogrn']}")
-    print(f"  OKVED: {result['okved']}")
-    print(f"  Status: {result['status']}")
-    print(f"  Registration Date: {result['reg_date']}")
-    print(f"  Phone: {result['phone_number']}")
+    print(f"\nQuery: {result['query']}")
+    org = result['organization']
+    if org['inn']:
+        print(f"Organization: {org['name']}")
+        print(f"  INN: {org['inn']}")
+        print(f"  OGRN: {org['ogrn']}")
+        print(f"  KPP: {org['kpp']}")
+        print(f"  OKVED: {org['okved']}")
+        print(f"  OKVED Additional: {org['okved_additional']}")
+        print(f"  Address: {org['address']}")
+        print(f"  Phone: {org['phone']}")
+        print(f"  Email: {org['email']}")
+        print(f"  Director: {org['director']}")
+        print(f"  Registration Date: {org['registration_date']}")
+        print(f"  Status: {org['status']}")
+        print(f"  Region: {org['region']}")
+    else:
+        print("  Organization not found")
