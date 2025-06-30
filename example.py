@@ -1,7 +1,3 @@
-"""
-Example usage of EGRN Parser library
-"""
-
 from src.main import search_organizations
 
 # С оквэдами
