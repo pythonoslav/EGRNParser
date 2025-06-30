@@ -2,3 +2,7 @@ __pycache__
 venv
 .venv
 .idea
+.claude
+test_final.py
+example.py
+README.md
